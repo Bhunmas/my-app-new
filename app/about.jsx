@@ -4,7 +4,24 @@ import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 // component
 import Api from "../component/Api";
-import FlatListItem from "../component/FlatList";
+
+const Items = ({ item }) => {
+  return (
+    <View>
+      <View style={styles.container}>
+        <View style={styles.rowBetween}>
+          <Text style={styles.item}>{item.city}</Text>
+          <Text style={styles.temperature_hour}>
+            {item.temperature_hour}
+            {item.hour_unit}
+          </Text>
+        </View>
+
+        <Text style={styles.item}>Country {item.country}</Text>
+      </View>
+    </View>
+  );
+};
 
 const formatDate = (currentDate) => {
   let [day, month, year] = currentDate.split("/");
@@ -19,9 +36,7 @@ const About = () => {
   const date = new Date();
   const currentDate = date.toLocaleDateString("th-TH");
   const currentDateFormattoApi = formatDate(currentDate);
-  // const timeSendApi = format(currentDate);
-  // const lastWeek = date.toLocaleDateString("th-TH", {
-  //   dayPeriod: "short",
+  const [loading, setLoading] = useState(true);
   const lastDate = subDays(date, 7);
   const lastDateFormattoApi = formatDate(
     lastDate.toLocaleDateString("th-TH", {
@@ -31,16 +46,38 @@ const About = () => {
 
   // });
 
-  console.log("lastDateFormattoApi ", lastDateFormattoApi);
-  console.log("lastWeek");
   useEffect(() => {
-    const result = async () =>
-      await Api(
-        `https://archive-api.open-meteo.com/v1/archive?latitude=52.52&longitude=13.41&start_date=${lastDateFormattoApi}&end_date=${currentDateFormattoApi}&daily=weather_code&hourly=temperature_2m&timezone=America%2FNew_York`,
-      );
+    const result = async () => {
+      try {
+        const res = await Api(
+          `https://archive-api.open-meteo.com/v1/archive?latitude=52.52&longitude=13.41&start_date=${lastDateFormattoApi}&end_date=${currentDateFormattoApi}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=America%2FNew_York`,
+        );
+        const responeTime = res.daily.time;
+        const responeTemperature_2m_max = res.daily.temperature_2m_max;
+        const apiMapping = responeTime.map((value, index) => {
+          const obj = {
+            responeTime: value,
+            responeTemperature_2m_max: responeTemperature_2m_max[index],
+            unit: res.daily_units.temperature_2m_max,
+          };
+          return obj;
+        });
+        console.log("res", apiMapping);
+        setDataFromApi(apiMapping);
+      } catch (err) {
+        console.error("error", err);
+      } finally {
+        setLoading(false);
+      }
+    };
     result();
   }, []);
-  return (
+  useEffect(() => {
+    console.log("ress", dataFromApi);
+  }, [dataFromApi]);
+  return loading ? (
+    <Text>Loading ......</Text>
+  ) : (
     <View style={styles.container}>
       <Text>
         {city} {country}
@@ -49,10 +86,9 @@ const About = () => {
       <FlatList
         data={dataFromApi}
         renderItem={({ item }) => {
-          console.log("items : ", item);
-          return <FlatListItem onPress={() => {}} item={item} />;
+          return <Items onPress={() => {}} item={item} />;
         }}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
       ></FlatList>
 
       {/* <Button
