@@ -14,7 +14,6 @@ const Home = () => {
   const a = Api("");
   return (
     <View style={[styles.contain]}>
-      {console.log(a)}
       <FlatListComponent />
       {/* <Text style={{color:theme.color,fontSize:theme.fontsize}}>HomePage</Text>
       <View>
