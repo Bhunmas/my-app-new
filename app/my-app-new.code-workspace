@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "my-app-new",
+			"path": ".."
+		},
+		{
+			"name": "component",
+			"path": "../../my-app/component"
+		}
+	],
+	"settings": {}
+}
