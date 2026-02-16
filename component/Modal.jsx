@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
-
+import Colors from "../constants/theme";
 const ModalComponent = ({ visible, onClose }) => {
   return (
     <Modal
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     width: "10%",
     height: "10%",
     borderRadius: 12,
-    backgroundColor: "rgba(255, 246, 246, 0.5)",
   },
   overlay: {
     backgroundColor: "rgba(0,0,0,0.5)",
@@ -70,7 +69,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     borderBottomWidth: 1,
-    borderColor: "rgba(5, 102, 102, 0.5)",
+    borderBlockColor: Colors.secondary,
+
     // textDecorationLine: "underline",
     // textDecorationColor: "black",
     // textDecorationStyle: "double",
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   itemCard: {
-    backgroundColor: "white",
+    backgroundColor: Colors.backgroundColor,
     padding: 12,
     borderRadius: 12,
   },
@@ -87,6 +87,6 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     fontWeight: "550",
-    color: "rgba(4, 104, 104, 0.8)",
+    color: Colors.primary,
   },
 });

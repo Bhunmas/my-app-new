@@ -8,7 +8,12 @@ const configCountryApi = [
   { name: "Los Angeles", lat: 34.0522, lon: -118.2437 },
   { name: "Toronto", lat: 43.651, lon: -79.347 },
   { name: "Berlin", lat: 52.52, lon: 13.405 },
-  { name: "London", lat: 51.5072, lon: -0.1276 },
+  {
+    name: "London",
+    lat: 51.5072,
+    lon: -0.1276,
+    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg/250px-Flag_of_the_United_Kingdom_%283-5%29.svg.png",
+  },
   { name: "Paris", lat: 48.8566, lon: 2.3522 },
   { name: "Rome", lat: 41.9028, lon: 12.4964 },
 ];

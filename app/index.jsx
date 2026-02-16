@@ -4,14 +4,9 @@ import { StyleSheet, View } from "react-native";
 
 // import
 
-import Api from "../component/Api.jsx";
 import FlatListComponent from "../component/FlatList.jsx";
-// import { colors } from "../constants/theme.js";
-
+import Colors from "../constants/theme";
 const Home = () => {
-  // const colorTheme = useColorScheme(colors);
-  // const theme = colors[colorTheme] ?? colors.light;
-  const a = Api("");
   return (
     <View style={[styles.contain]}>
       <FlatListComponent />
@@ -33,6 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: Colors.backgroundColor,
   },
   image: {
     width: 150,

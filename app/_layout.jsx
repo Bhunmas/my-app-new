@@ -3,7 +3,7 @@ import { Stack } from "expo-router";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 import ModalComponent from "../component/Modal.jsx";
-
+import Colors from "../constants/theme";
 const Layout = () => {
   const [visible, setVisible] = useState(false);
 
@@ -13,18 +13,19 @@ const Layout = () => {
       <ModalComponent visible={visible} onClose={() => setVisible(false)} />
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: "white" },
-          headerTintColor: "light",
+          headerStyle: { backgroundColor: Colors.primary },
         }}
       >
         <Stack.Screen
           name={"index"}
           options={{
+            headerTintColor: Colors.backgroundColor,
             title: "index",
             animation: "fade_from_bottom",
             headerRight: () => (
               <Ionicons
                 name="menu"
+                color={Colors.backgroundColor}
                 size={24}
                 onPress={() => {
                   setVisible(!visible);
@@ -33,7 +34,10 @@ const Layout = () => {
             ),
           }}
         />
-        <Stack.Screen name={"about"} options={{ title: "Detail" }} />
+        <Stack.Screen
+          name={"detail"}
+          options={{ headerTintColor: Colors.backgroundColor, title: "Detail" }}
+        />
       </Stack>
     </>
   );

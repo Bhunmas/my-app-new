@@ -1,18 +1,21 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-const FlatListItem = ({ item, onPress }) => {
+import Colors from "../constants/theme";
+const FlatListItem = ({ item, onLongPress }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={{ width: 250, height: 150 }}>
-      {console.log("onPress", onPress)}
+    <TouchableOpacity
+      onLongPress={onLongPress}
+      style={{ width: 250, height: 150 }}
+    >
       <View style={styles.container}>
         <View style={styles.rowBetween}>
-          <Text style={styles.item}>{item.city}</Text>
+          <Text style={styles.itemTopic}>{item.city}</Text>
           <Text style={styles.temperature_hour}>
             {item.temperature_hour}
             {item.hour_unit}
           </Text>
         </View>
 
-        <Text style={styles.item}>Country {item.country}</Text>
+        <Text style={styles.item}>Continent {item.continent}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
     // flexWrap: "wrap",
     // justifyContent: "center",
     // alignContent: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.card,
     padding: 16,
     marginVertical: 8,
     marginHorizontal: 12,
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
   },
   item: {
     fontSize: 18,
-    color: "blue",
+    color: Colors.text,
   },
   rowBetween: {
     flexDirection: "column",
@@ -48,5 +51,9 @@ const styles = StyleSheet.create({
   },
   temperature_hour: {
     fontSize: 30,
+    color: Colors.primary,
+  },
+  itemTopic: {
+    fontSize: 22,
   },
 });

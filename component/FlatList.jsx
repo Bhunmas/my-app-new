@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 // config
 import configCountryApi from "../constants/configCountryApi";
+import Colors from "../constants/theme";
 // service
 import Api from "./Api";
 
@@ -37,13 +38,16 @@ const FlatListComponent = ({}) => {
 
         const resMap = result.map((item, index) => {
           const zone = item.timezone.split("/");
+          console.log("zone", zone);
           const result = {
             id: index + 1,
-            country: zone[0],
+            continent: zone[0],
             city: zone[1],
             // daily: res.time[0],
             temperature_hour: item.current_weather.temperature,
             hour_unit: item.current_weather_units.temperature,
+            latitude: item.latitude,
+            longitude: item.longitude,
           };
           return result;
         });
@@ -67,13 +71,17 @@ const FlatListComponent = ({}) => {
       <FlatList
         data={dataFromApi}
         renderItem={({ item }) => {
-          console.log("items : ", item);
           return (
             <FlatListItem
-              onPress={() => {
+              onLongPress={() => {
                 router.push({
-                  pathname: "/about",
-                  params: { city: item.city, country: item.country },
+                  pathname: "/detail",
+                  params: {
+                    city: item.city,
+                    continent: item.continent,
+                    latitude: item.latitude,
+                    longitude: item.longitude,
+                  },
                 });
               }}
               item={item}
@@ -96,5 +104,7 @@ const styles = StyleSheet.create({
   topic: {
     fontSize: 24,
     marginBottom: 10,
+    color: Colors.secondary,
+    fontWeight: "450",
   },
 });
