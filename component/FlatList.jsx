@@ -48,7 +48,6 @@ const FlatListComponent = ({}) => {
           return result;
         });
         setdataFromApi(resMap);
-        console.log("res", resMap);
       };
       result();
     } catch (err) {

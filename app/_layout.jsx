@@ -9,6 +9,7 @@ const Layout = () => {
 
   return (
     <>
+      {/* Modal set avaliable display True equal show False disappear */}
       <ModalComponent visible={visible} onClose={() => setVisible(false)} />
       <Stack
         screenOptions={{
@@ -32,7 +33,7 @@ const Layout = () => {
             ),
           }}
         />
-        <Stack.Screen name={"about"} options={{ title: "about" }} />
+        <Stack.Screen name={"about"} options={{ title: "Detail" }} />
       </Stack>
     </>
   );
