@@ -7,7 +7,6 @@ import Colors from "../constants/theme";
 import Api from "../component/Api";
 
 const Items = ({ item }) => {
-  console.log("item", item);
   return (
     <View>
       <View style={styles.rowBetween}>
@@ -39,7 +38,7 @@ const formatDate = (currentDate) => {
   return `${year}-${month}-${day}`;
 };
 const Detail = () => {
-  const { city, continent, latitude, longitude } = useLocalSearchParams();
+  const { city, continent, latitude, longitude, item } = useLocalSearchParams();
   const router = useRouter();
   const [dataFromApi, setDataFromApi] = useState([]);
   const date = new Date();
@@ -52,7 +51,13 @@ const Detail = () => {
       hour12: false,
     }),
   );
-
+  const beforeDate = subDays(date, 1);
+  const beforeDateFormattoApi = formatDate(
+    beforeDate.toLocaleDateString("th-TH", {
+      hour12: false,
+    }),
+  );
+  console.log("const lastDate = subDays(date, 6);", beforeDateFormattoApi);
   // });
 
   useEffect(() => {
@@ -60,18 +65,27 @@ const Detail = () => {
       console.log("location", latitude);
       try {
         const res = await Api(
-          `https://archive-api.open-meteo.com/v1/archive?latitude=${latitude}&longitude=${longitude}&start_date=${lastDateFormattoApi}&end_date=${currentDateFormattoApi}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=America%2FNew_York`,
+          `https://archive-api.open-meteo.com/v1/archive?latitude=${latitude}&longitude=${longitude}&start_date=${lastDateFormattoApi}&end_date=${beforeDateFormattoApi}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=America%2FNew_York`,
         );
         const responeTime = res.daily.time;
         const responeTemperature_2m_max = res.daily.temperature_2m_max;
         const apiMapping = responeTime.map((value, index) => {
           const obj = {
-            id: responeTime.length - index,
+            id: responeTime.length + 1 - index,
             responeTime: formatDateShow(value),
             responeTemperature_2m_max: responeTemperature_2m_max[index],
             unit: res.daily_units.temperature_2m_max,
           };
           return obj;
+        });
+
+        const parseItem = JSON.parse(item);
+        console.log("parse", parseItem);
+        apiMapping.push({
+          id: 1,
+          responeTemperature_2m_max: parseItem.temperature_hour,
+          responeTime: currentDate,
+          unit: parseItem.hour_unit,
         });
 
         setDataFromApi(apiMapping.sort((a, b) => a.id - b.id));
