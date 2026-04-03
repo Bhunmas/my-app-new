@@ -26,8 +26,8 @@ const FlatListComponent = ({}) => {
   });
   const GetApiFromBack = async (pagination) => {
     const contryPage = configCountryApi.slice(
-      pagination,
-      pagination + endOfRange,
+      pagination - 1,
+      pagination - 1 + endOfRange,
     );
     console.log("cur", pagination);
     const result = await Promise.all(
@@ -42,9 +42,10 @@ const FlatListComponent = ({}) => {
     const resMap = result.map((item, index) => {
       const zone = item.timezone.split("/");
 
-      console.log("number + pagination,", index + pagination);
+      console.log("number + pagination,", item);
       const result = {
         id: index + pagination,
+        country: contryPage[index].country,
         continent: zone[0],
         city: zone[1],
         // daily: res.time[0],
@@ -78,7 +79,7 @@ const FlatListComponent = ({}) => {
         data={dataFromApi}
         onEndReached={() => {
           const nextPage = pagination + 1;
-          setPagination((prev) => prev + 1);
+          setPagination(pagination + 1);
           console.log("pagination", nextPage);
           GetApiFromBack(nextPage * endOfRange);
         }}

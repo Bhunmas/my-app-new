@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../constants/theme";
 const FlatListItem = ({ item, onLongPress }) => {
+  console.log("item", item);
   return (
     <TouchableOpacity
       onLongPress={onLongPress}
@@ -15,7 +16,7 @@ const FlatListItem = ({ item, onLongPress }) => {
           </Text>
         </View>
 
-        <Text style={styles.item}>Continent {item.continent}</Text>
+        <Text style={styles.item}>{item.country} Country </Text>
       </View>
     </TouchableOpacity>
   );
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   item: {
-    fontSize: 18,
+    fontSize: 16,
     color: Colors.text,
   },
   rowBetween: {

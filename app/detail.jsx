@@ -43,7 +43,11 @@ const Detail = () => {
   const [dataFromApi, setDataFromApi] = useState([]);
   const date = new Date();
   const currentDate = date.toLocaleDateString("th-TH");
-  const currentDateFormattoApi = formatDate(currentDate);
+  const [d, m, y] = currentDate.split("/");
+  const day = d.padStart(2, "0");
+  const month = m.padStart(2, "0");
+  const year = y;
+  const currentDateFormattoApi = `${day}-${month}-${year}`;
   const [loading, setLoading] = useState(true);
   const lastDate = subDays(date, 6);
   const lastDateFormattoApi = formatDate(
@@ -84,7 +88,7 @@ const Detail = () => {
         apiMapping.push({
           id: 1,
           responeTemperature_2m_max: parseItem.temperature_hour,
-          responeTime: currentDate,
+          responeTime: currentDateFormattoApi,
           unit: parseItem.hour_unit,
         });
 
